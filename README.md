@@ -87,8 +87,7 @@ initializes the function and listens for tasks on a channel. Upon receiving a ta
 it calls `Function.Execute()` with the given arguments and sends the task with the set
 result to another channel.
 
-`Executor.Execute()` creates a task and sends it down the channel where it is picked up.
-It then listens for done tasks until it found the right one (tasks have an id) and returns
-that tasks result.
+`Executor.Execute()` creates a task (which holds its own return channel) and sends it down the open task channel where it is picked up.
+It then listens for the task to return on the new channel
 
-to dismiss one Function, a closing task is sent down the channel. This triggers the goroutine which receives it to exit, thus calling `Function.close`
+to dismiss one Function, a closing task is sent down the open tasks channel. This triggers the goroutine which receives it to exit, thus calling `Function.close`

@@ -57,6 +57,8 @@ func run(in <-chan task, fn Function) {
 		t, cont = <-in //next
 	}
 
+	t.out <- t
+
 	//this goroutine is done, close the function
 	fn.Close()
 }
